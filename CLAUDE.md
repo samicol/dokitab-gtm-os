@@ -9,6 +9,7 @@ DokiTab (dokitab.com): offline-first healthcare operating system, hospital manag
 - `context/messaging/` — approved value props, taglines, objection handling. Read before writing any copy.
 - `context/brand-kit/` — logos, colours, fonts, voice. Read before any visual or branded output.
 - `context/docs/research/` — raw research and source material. Read when you need to verify a company fact.
+- `context/docs/gtm-system.md` — the end-to-end outbound GTM system design (12 steps, Context OS to feedback loop). Read before building any workflow, campaign, or automation.
 - `knowledge-base/playbooks/` — repeatable GTM processes. Read before running a known workflow.
 - `knowledge-base/learnings/` — what worked and what did not. Read at the start of planning new work.
 - `meetings/` — notes and transcripts. Read when a task refers to a past discussion.
