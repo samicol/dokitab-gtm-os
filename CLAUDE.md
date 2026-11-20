@@ -5,11 +5,12 @@ DokiTab (dokitab.com): offline-first healthcare operating system, hospital manag
 
 ## How this folder works
 - `context/icp/` — ideal customer profiles. Holds `icp.md` (5-layer ICP plus disqualifiers), `personas.md` (Champion, Economic Buyer, Influencer), and `signal-matrix.md` (segment x persona angles, buying signals, priorities). Read before writing any targeting or outreach.
-- `context/positioning/` — how we frame DokiTab vs alternatives. Read before messaging or campaign work.
-- `context/messaging/` — approved value props, taglines, objection handling. Read before writing any copy.
-- `context/brand-kit/` — logos, colours, fonts, voice. Read before any visual or branded output.
+- `context/positioning/` — how we frame DokiTab vs alternatives. Holds `value-proposition.md`, `positioning.md`, and `competitors.md`. Read before messaging or campaign work.
+- `context/messaging/` — approved value props, taglines, objection handling. Holds `messaging.md`. Read before writing any copy.
+- `context/brand-kit/` — brand voice and key phrases. Holds `brand.md`. Read before any visual or branded output.
 - `context/docs/research/` — raw research and source material: `company.md`, `customers.md`, `competitors.md`, `market.md`, `signals.md`, `voice.md`. Read when you need to verify a company fact.
 - `context/docs/gtm-system.md` — the end-to-end outbound GTM system design (12 steps, Context OS to feedback loop). Read before building any workflow, campaign, or automation.
+- `context/docs/case-studies.md` — customer stories from research (currently one anonymous testimonial). Read before using any proof point.
 - `knowledge-base/playbooks/` — repeatable GTM processes. Read before running a known workflow.
 - `knowledge-base/learnings/` — what worked and what did not. Read at the start of planning new work.
 - `meetings/` — notes and transcripts. Read when a task refers to a past discussion.
