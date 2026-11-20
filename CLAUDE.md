@@ -14,7 +14,7 @@ DokiTab (dokitab.com): offline-first healthcare operating system, hospital manag
 - `knowledge-base/playbooks/` — repeatable GTM processes. Read before running a known workflow.
 - `knowledge-base/learnings/` — what worked and what did not. Read at the start of planning new work.
 - `meetings/` — notes and transcripts. Read when a task refers to a past discussion.
-- `output/campaigns/` — finished campaign deliverables, one folder per workflow (e.g. `facility-expansion/workflow-spec.md`). Read to reuse or reference past campaigns.
+- `output/campaigns/` — campaign deliverables: `campaign-strategy.md` (ranked outbound ideas) plus one folder per workflow (e.g. `facility-expansion/workflow-spec.md`). Read to reuse or reference past campaigns.
 - `output/outbound/` — outbound deliverables (emails, sequences, lists). Read to reuse past outreach.
 - `output/social/` — social posts and assets. Read to reuse past social content.
 - `output/data/` — exported data and lists. Read when a task needs prior data.
