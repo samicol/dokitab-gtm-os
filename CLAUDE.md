@@ -1,10 +1,10 @@
 # DokiTab GTM Context OS
 
 ## Company
-DokiTab (dokitab.com): to fill in after research.
+DokiTab (dokitab.com): offline-first healthcare operating system, hospital management system and EMR (with pharmacy POS and lab LIMS) for hospitals, clinics, diagnostic labs and pharmacies in Nigeria and West Africa; free core tier plus a ₦30,000/month plan. [company.md]
 
 ## How this folder works
-- `context/icp/` — ideal customer profiles (hospitals, clinics, labs, pharmacies). Read before writing any targeting or outreach.
+- `context/icp/` — ideal customer profiles. Holds `icp.md` (5-layer ICP plus disqualifiers) and `personas.md` (Champion, Economic Buyer, Influencer). Read before writing any targeting or outreach.
 - `context/positioning/` — how we frame DokiTab vs alternatives. Read before messaging or campaign work.
 - `context/messaging/` — approved value props, taglines, objection handling. Read before writing any copy.
 - `context/brand-kit/` — logos, colours, fonts, voice. Read before any visual or branded output.
