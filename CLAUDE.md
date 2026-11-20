@@ -4,16 +4,16 @@
 DokiTab (dokitab.com): offline-first healthcare operating system, hospital management system and EMR (with pharmacy POS and lab LIMS) for hospitals, clinics, diagnostic labs and pharmacies in Nigeria and West Africa; free core tier plus a ₦30,000/month plan. [company.md]
 
 ## How this folder works
-- `context/icp/` — ideal customer profiles. Holds `icp.md` (5-layer ICP plus disqualifiers) and `personas.md` (Champion, Economic Buyer, Influencer). Read before writing any targeting or outreach.
+- `context/icp/` — ideal customer profiles. Holds `icp.md` (5-layer ICP plus disqualifiers), `personas.md` (Champion, Economic Buyer, Influencer), and `signal-matrix.md` (segment x persona angles, buying signals, priorities). Read before writing any targeting or outreach.
 - `context/positioning/` — how we frame DokiTab vs alternatives. Read before messaging or campaign work.
 - `context/messaging/` — approved value props, taglines, objection handling. Read before writing any copy.
 - `context/brand-kit/` — logos, colours, fonts, voice. Read before any visual or branded output.
-- `context/docs/research/` — raw research and source material. Read when you need to verify a company fact.
+- `context/docs/research/` — raw research and source material: `company.md`, `customers.md`, `competitors.md`, `market.md`, `signals.md`, `voice.md`. Read when you need to verify a company fact.
 - `context/docs/gtm-system.md` — the end-to-end outbound GTM system design (12 steps, Context OS to feedback loop). Read before building any workflow, campaign, or automation.
 - `knowledge-base/playbooks/` — repeatable GTM processes. Read before running a known workflow.
 - `knowledge-base/learnings/` — what worked and what did not. Read at the start of planning new work.
 - `meetings/` — notes and transcripts. Read when a task refers to a past discussion.
-- `output/campaigns/` — finished deliverables. Read to reuse or reference past campaigns.
+- `output/campaigns/` — finished campaign deliverables, one folder per workflow (e.g. `facility-expansion/workflow-spec.md`). Read to reuse or reference past campaigns.
 - `output/outbound/` — outbound deliverables (emails, sequences, lists). Read to reuse past outreach.
 - `output/social/` — social posts and assets. Read to reuse past social content.
 - `output/data/` — exported data and lists. Read when a task needs prior data.
@@ -21,6 +21,7 @@ DokiTab (dokitab.com): offline-first healthcare operating system, hospital manag
 - `tools/` — scripts and utilities. Read when automating a repeated task.
 - `weekly-priorities/` — the plan for each ISO week. Read at the start of every session.
 - `work-log/` — timestamped log of every change. Read to see what was done, and append to it every session.
+- `README.md` (root) — one-paragraph description of what this repo is.
 
 ## Skills
 Skills live in `.claude/skills/`. Available:
