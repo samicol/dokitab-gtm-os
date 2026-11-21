@@ -9,6 +9,8 @@ Spec: [workflow-spec.md](workflow-spec.md). Written with the `campaign-copy` ski
 
 **Bans honored:** no em/en dashes, no `!`, no "free" (rendered as "₦0 a month / no per-seat fees"), no "congrats / I saw / noticed / looks like" openers [copy-bans.yaml].
 
+**Updated 2026-11-21:** the e1l1 waterfall was re-pointed from `is_new_hefamaa` to `is_new_opening` / `is_new_listing` to match the revised trigger architecture in `workflow-spec.md` (Places snapshot delta + opening announcements; HEFAMAA is now a verification flag, not a trigger).
+
 ---
 
 ## Email 1
@@ -27,9 +29,9 @@ DokiTab {puts wards, pharmacy, lab and billing on one record|runs the whole faci
 {Worth setting up a workspace before the records system is locked in?|Want to try it on one department before you commit?}
 ```
 
-**`{{e1l1}}`** (routes on trigger):
-- `+ is_new_hefamaa:` Getting {{facility_name}} through HEFAMAA accreditation usually means the records and billing setup is still being decided.
-- `+ is_new_branch:` Opening the new {{facility_name}} site in {{city_area}} usually means you are standing records and billing up from scratch there.
+**`{{e1l1}}`** (routes on trigger; `is_new_opening` takes priority over `is_new_listing`, and one is always set by construction):
+- `+ is_new_opening:` Opening {{facility_name}} in {{city_area}} usually means the records and billing setup is still being decided.
+- `+ is_new_listing:` A new facility like {{facility_name}} in {{city_area}} usually means the records system is still an open decision.
 - `FALLBACK:` Standing up {{facility_name}} in {{city_area}} usually means the records system is still an open decision.
 
 **`{{e1l2}}`** (routes on `bills_hmo`, boolean = exhaustive, no fallback):
@@ -98,19 +100,19 @@ No DM 3 [linkedin-dm-frameworks.md]. LinkedIn leads with the question; email lea
 |---|---|---|
 | `{{first_name}}` | all greetings, DMs | Apollo/Prospeo |
 | `{{facility_name}}` | E1 (l1, subject), E3, DM1 | Places/HEFAMAA |
-| `{{city_area}}` | E1 l1 (new-branch + fallback) | Google Places |
+| `{{city_area}}` | E1 l1 (all branches) | Google Places |
 | `{{hmo_name}}` | E1 l2 (bills_hmo=true only) | HMO/ILERA EKO directory |
 
 ---
 
-## Assembled sample email (S1, is_new_hefamaa, bills_hmo = true)
+## Assembled sample email (S1, is_new_opening, bills_hmo = true)
 
 ```
 Subject: records before you lock in
 
 {{first_name}},
 
-Getting {{facility_name}} through HEFAMAA accreditation usually means the records and billing setup is still being decided.
+Opening {{facility_name}} in {{city_area}} usually means the records and billing setup is still being decided.
 
 With {{hmo_name}} billing in the mix, clean claims from the first encounter tend to matter more than people expect early on.
 
