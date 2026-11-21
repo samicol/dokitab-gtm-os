@@ -14,11 +14,12 @@ DokiTab (dokitab.com): offline-first healthcare operating system, hospital manag
 - `knowledge-base/playbooks/` — repeatable GTM processes. Read before running a known workflow.
 - `knowledge-base/learnings/` — what worked and what did not. Read at the start of planning new work.
 - `meetings/` — notes and transcripts. Read when a task refers to a past discussion.
-- `output/campaigns/` — campaign deliverables: `campaign-strategy.md` (ranked outbound ideas) plus one folder per workflow (e.g. `facility-expansion/workflow-spec.md`). Read to reuse or reference past campaigns.
+- `output/campaigns/` — campaign deliverables: `campaign-strategy.md` (ranked outbound ideas) plus one folder per workflow (`facility-expansion/` holds `workflow-spec.md` and `copy.md`). Read to reuse or reference past campaigns.
 - `output/outbound/` — outbound deliverables (emails, sequences, lists). Read to reuse past outreach.
 - `output/social/` — social posts and assets. Read to reuse past social content.
 - `output/data/` — exported data and lists. Read when a task needs prior data.
 - `inspiration/` — ads and examples to learn from. Read for reference when creating new copy or creative.
+- `diagrams/` — generated diagram sources and renders (e.g. the GTM-system flowchart: `.json` spec, `.svg`, `.png`). Rebuild or edit via the `miro-gtm-flowchart` skill.
 - `tools/` — scripts and utilities. Read when automating a repeated task.
 - `weekly-priorities/` — the plan for each ISO week. Read at the start of every session.
 - `work-log/` — timestamped log of every change. Read to see what was done, and append to it every session.
@@ -62,6 +63,7 @@ GTM stack I use:
 - Miro (MCP connected): diagrams and GTM flowcharts.
 - Apollo: prospecting and contact data.
 - Claude Code: AI assistant for this Context OS.
+- Git and GitHub (gh CLI): version control and the source-of-truth repo (samicol/dokitab-gtm-os).
 
 Local tool bundles in `tools/` (from the gtm-starter-kit):
 - `tools/rex/`: Clay API client, cost tooling and the ClayLens browser extension.
