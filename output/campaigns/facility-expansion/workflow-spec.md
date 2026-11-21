@@ -1,6 +1,6 @@
 # Workflow Spec: New Facility (facility-expansion)
 
-**Status:** STRUCTURE-APPROVED 2026-11-20 · copy pending
+**Status:** COPY-APPROVED 2026-11-21 (S1 x CMD cell; email + LinkedIn) · copy in [copy.md](copy.md)
 
 > Interpretation (confirm at Checkpoint 1): this is DokiTab's #1 workflow (WF1, HEFAMAA accreditation, score 17) [signal-matrix.md], framed as "New facility." Primary trigger = HEFAMAA new registration/accreditation (a facility newly entering or re-accrediting in the registry). New-branch/opening (signal 4) is folded in as a secondary trigger since both mean a new or expanding facility. Change this split if you intended new-branch-opening as primary.
 >
