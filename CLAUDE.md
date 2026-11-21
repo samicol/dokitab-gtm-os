@@ -58,7 +58,7 @@ GTM stack I use:
 - Clay: data enrichment and outbound workbook building.
 - HubSpot: CRM.
 - n8n: workflow automation.
-- Notion (MCP connected): where we publish finished docs. GitHub stays the source of truth.
+- Notion (MCP connected): where we publish finished docs. GitHub stays the source of truth. Published Context OS: https://www.notion.so/41f7cb0fc42d8150a5ddf79d65a5e9f1
 - Miro (MCP connected): diagrams and GTM flowcharts.
 - Apollo: prospecting and contact data.
 - Claude Code: AI assistant for this Context OS.
