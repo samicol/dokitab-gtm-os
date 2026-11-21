@@ -28,7 +28,7 @@ A Nigerian healthcare facility that first appears as a new Google Places listing
 
 ## 3. Sources [ENGINE]
 
-- **Trigger source:** Google Places monthly snapshot of Nigerian healthcare facilities, keyed by `place_id`, diffed against a persisted baseline table (a Clay table re-import, or an n8n / Google Sheets store) to output `first_seen_date` and `is_new_listing` [signal-matrix.md]. Secondary trigger: public opening announcements via Claygent web search over news, LinkedIn, and Instagram (Nairametrics, Guardian, facility socials) [signal-matrix.md].
+- **Trigger source:** Google Places monthly snapshot of Nigerian healthcare facilities, keyed by `place_id`, diffed against a persisted baseline table (a Clay table re-import, or an n8n / Google Sheets store) to output `first_seen_date` and `is_new_listing` [signal-matrix.md]. Secondary trigger: public opening announcements via Claygent web search over news, LinkedIn, Instagram, and Facebook (Nairametrics, Guardian, facility socials) [signal-matrix.md]. Facebook is reached through Google's index (`site:facebook.com` SERP), not by crawling Facebook directly, because Facebook has no public search API and blocks open crawling; candidate Pages are then enriched with an Apify Facebook Page scraper [INFERRED].
 - **Verification + enrichment sources:** HEFAMAA online registry QR lookup via Claygent (`hefamaa_verified`) [market.md], [signals.md]; Google Places (facility categories, review count, location) [signal-matrix.md]; Claygent (website/company-domain check, specialty sub-classification, record-state discovery) [gtm-system.md]; HMO and LASHMA/ILERA EKO accredited-provider directories via Claygent web search (HMO participation) [company.md], [market.md]; PCN premises via Claygent web search (pharmacies) [market.md]; Apollo/Prospeo (headcount, firmographic, people) [gtm-system.md]; HubSpot/DokiTab customer and active-pipeline lookup table (suppression) [gtm-system.md] [INFERRED].
 
 ## 4. Signals Table [ENGINE]
@@ -36,7 +36,7 @@ A Nigerian healthcare facility that first appears as a new Google Places listing
 | # | Signal | Role | How it's read (Clay build) | Output |
 |---|---|---|---|---|
 | 1 | New Places listing (snapshot delta) | trigger | boolean: `place_id` first seen in the monthly Google Places snapshot <= 90 days, diffed vs a persisted baseline table | `is_new_listing` + `first_seen_date` |
-| 2 | Public opening announcement | trigger (secondary) | boolean: Claygent web search finds a news / LinkedIn / Instagram opening post <= 90 days | `is_new_opening` + `opening_ref` |
+| 2 | Public opening announcement | trigger (secondary) | boolean: Claygent web search finds a news / LinkedIn / Instagram / Facebook opening post <= 90 days (Facebook via Google index + Apify Page scrape, see note below) | `is_new_opening` + `opening_ref` (+ `fb_page_url`, `fb_opening_ref`) |
 | 3 | HEFAMAA verification | gate (enrichment, not trigger) | boolean: Claygent HEFAMAA registry QR lookup confirms the facility | `hefamaa_verified` |
 | 4 | Facility vertical | router | Claygent AI enum from Places category + website: `multi_specialty_hospital` / `diagnostic_lab` / `pharmacy` / `specialty_clinic` / `teaching_or_ngo` [icp.md], [signal-matrix.md] | `segment` (S1 to S5) |
 | 5 | Specialty sub-classification (S4) | router (S4 only) | Claygent AI enum from `facility_name` + Places categories + website/social bio: `Dental` / `Eye / Optometry` / `Physiotherapy` / `Maternity / Fertility` / `Diagnostics / Lab` / `Multi-Specialty` | `specialty` |
@@ -51,6 +51,8 @@ A Nigerian healthcare facility that first appears as a new Google Places listing
 - Apollo headcount low (or low Google review count) = small facility (owner-led, faster decision); `[INFERRED]` ~ up to 150 beds.
 - Apollo headcount mid = mid facility (Champion + Economic Buyer both engaged); `[INFERRED]` ~ 150 to 500 beds.
 - Apollo headcount high (or high review count) = large/teaching-adjacent (longer cycle, board-led); `[INFERRED]` ~ 500+ beds.
+
+**Signal 2 Facebook sub-source (Google-indexed) `[INFERRED]`.** Facebook is a strong opening-announcement source in Nigeria (many clinics are Facebook-first), but it has no public search API and blocks open crawling, so it is not scraped directly. Pipeline: (1) scheduled Google SERP queries such as `site:facebook.com ("now open" OR "grand opening") (clinic OR hospital OR pharmacy OR diagnostic) {city}` return candidate Page/post URLs (`fb_page_url`); (2) an Apify Facebook Page scraper pulls founded date, recent posts, address, and phone from each public Page; (3) an AI column classifies opening language + recency (<= 90 days) to `is_fb_opening` + `fb_opening_ref`, which OR into `is_new_opening` / `opening_ref`. Caveats: public business Pages only, via Apify, never a logged-in personal account (ban / ToS risk); the Page "founded" date is not the opening date, so prefer a dated post and keep the Google Places `first_seen_date` as the harder trigger; match the Page to the facility on name + city + address before trusting it; run the 2-row validation gate (1 known-open, 1 not) before scaling.
 
 ## Qualification Rules (ICP fit gate) [ICP]
 
@@ -108,7 +110,7 @@ Axis counts (flat): 4 in-scope segments (S1 to S4) x 3 personas = 12 cells. For 
 | `{{first_name}}` / `{{title}}` | Apollo / Prospeo | all contacted |
 | `{{email}}` | Step 13 contact waterfall (verified) | all contacted |
 
-`{{opening_ref}}` fallback hierarchy (never renders blank): (1) a verified opening press/social snippet from Signal 2; (2) the phrase "a new listing in {{neighborhood}}" built from Google Places. One of the two always resolves, because every row has either an opening announcement or a Places listing by construction.
+`{{opening_ref}}` fallback hierarchy (never renders blank): (1) a verified opening press/social snippet from Signal 2 (news, LinkedIn, Instagram, or the Facebook `fb_opening_ref`); (2) the phrase "a new listing in {{neighborhood}}" built from Google Places. One of the two always resolves, because every row has either an opening announcement or a Places listing by construction.
 
 Data-must-exist: any fact not delivered by enrichment cannot appear in copy. Specific product figures stay `{{placeholder}}` until `context/messaging/facts.md` exists [INFERRED].
 
@@ -126,7 +128,7 @@ Ordered waterfall build, cheap source first, paid only on survivors; prove each 
 
 | Step | Clay build | Input to output |
 |---|---|---|
-| 1 | Source import: monthly Google Places snapshot of NG healthcare facilities, keyed by `place_id`, diffed against the persisted baseline table (Clay re-import / n8n / Sheets), plus the opening-announcement search | raw rows to `facility_name`, `place_id`, `city_area`, `neighborhood`, `first_seen_date`, `is_new_listing`, `is_new_opening`, `opening_ref` [signal-matrix.md] |
+| 1 | Source import: monthly Google Places snapshot of NG healthcare facilities, keyed by `place_id`, diffed against the persisted baseline table (Clay re-import / n8n / Sheets), plus the opening-announcement search (news/LinkedIn/Instagram, and Facebook via Google SERP to Apify Page scrape to an AI opening classifier) | raw rows to `facility_name`, `place_id`, `city_area`, `neighborhood`, `first_seen_date`, `is_new_listing`, `is_new_opening`, `opening_ref`, `fb_page_url`, `fb_opening_ref` [signal-matrix.md] |
 | 2 | Suppression dedup: match against the HubSpot/DokiTab customer + active-pipeline lookup on `domain` and normalized `facility_name + city` | drop existing customers/pipeline before any paid enrichment [gtm-system.md] |
 | 3 | HEFAMAA verification (Signal 3): Claygent QR-lookup of the registry | to `hefamaa_verified`; hold if false and no other verification [market.md], [gtm-system.md] |
 | 4 | Vertical classification (Signal 4): Claygent AI enum from Places category + website | to `segment` S1 to S5 [icp.md] |
