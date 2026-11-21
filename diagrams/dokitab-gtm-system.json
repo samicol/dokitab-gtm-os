@@ -1,0 +1,49 @@
+{
+  "title": "DokiTab GTM System",
+  "subtitle": "End-to-end outbound engine from the Context OS to the weekly feedback loop (see context/docs/gtm-system.md).",
+  "rows": [
+    {"title": "Find and qualify accounts", "direction": "ltr", "columns": ["1A", "1B", "1C", "1D", "1E"]},
+    {"title": "Route and reach the buyer", "direction": "rtl", "columns": ["2A", "2B", "2C"]},
+    {"title": "Sequence, reply, CRM, loop", "direction": "ltr", "columns": ["3A", "3B", ["rpos", "robj", "rref", "rout"], "3C", "3D"]}
+  ],
+  "nodes": {
+    "1A": {"kind": "start", "title": "Context OS", "sub": ["ICP, personas, offer", "Positioning, messaging"], "tools": ["claude_code", "github"]},
+    "1B": {"kind": "step", "title": "Buying signals", "sub": ["HEFAMAA new reg", "HMO onboarding", "Hiring, new branch, PCN"], "tools": ["clay", "n8n"]},
+    "1C": {"kind": "step", "title": "Find companies", "sub": ["HEFAMAA registry", "Google Places", "HMO directories"], "tools": ["clay"], "tool_label": "crawl4ai + Clay"},
+    "1D": {"kind": "step", "title": "Enrichment", "sub": ["Firmographic, technographic", "Verify HEFAMAA / PCN"], "tools": ["clay", "apollo"]},
+    "1E": {"kind": "decision", "title": "ICP fit?"},
+    "drop": {"kind": "exit", "title": "Drop", "sub": "Disqualify or hold", "below": "1E"},
+    "2A": {"kind": "step", "title": "Routing by segment", "sub": ["S1 to S5 lanes", "By vertical, size, signal"], "tools": ["clay", "n8n"]},
+    "2B": {"kind": "step", "title": "Find people", "sub": ["Champion: CMD", "Economic buyer: owner", "Influencers: pharmacist, lab, billing"], "tools": ["apollo", "clay"]},
+    "2C": {"kind": "step", "title": "Find + verify contact", "sub": ["Email find + verify", "WhatsApp or phone fallback"], "tools": ["clay", "apollo"]},
+    "3A": {"kind": "step", "title": "The sequence", "sub": ["Email, LinkedIn, WhatsApp", "Day 1 to Day 9 cadence", "Free workspace or demo CTA"], "tools": ["plusvibe", "linkedin", "whatsapp"]},
+    "3B": {"kind": "decision", "title": "Reply type?"},
+    "rpos": {"kind": "branch", "title": "Positive", "sub": "Book demo or confirm workspace"},
+    "robj": {"kind": "branch", "title": "Objection", "sub": "Counter: lock-in, offline, security"},
+    "rref": {"kind": "branch", "title": "Referral", "sub": "Capture new contact"},
+    "rout": {"kind": "exit", "title": "Opt-out", "sub": "Suppress, log reason"},
+    "3C": {"kind": "step", "title": "The CRM", "sub": ["Account, contact, opportunity", "Stages + attribution", "PLG workspace sync"], "tools": ["hubspot", "n8n"]},
+    "3D": {"kind": "start", "title": "Weekly feedback loop", "sub": ["Reply, bounce, objection", "Activations update context"], "tools": ["claude_code"], "align": "bottom"}
+  },
+  "edges": [
+    ["1A", "1B"],
+    ["1B", "1C"],
+    ["1C", "1D"],
+    ["1D", "1E"],
+    ["1E", "drop", "No"],
+    ["1E", "2A", "Yes"],
+    ["2A", "2B"],
+    ["2B", "2C"],
+    ["2C", "3A"],
+    ["3A", "3B"],
+    ["3B", "rpos"],
+    ["3B", "robj"],
+    ["3B", "rref"],
+    ["3B", "rout"],
+    ["rpos", "3C"],
+    ["robj", "3C"],
+    ["rref", "3C"],
+    ["3C", "3D"]
+  ],
+  "loop": {"from": "3D", "to": "1A", "label": "Weekly loop: results update the Context OS"}
+}

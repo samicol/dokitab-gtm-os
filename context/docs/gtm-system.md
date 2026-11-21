@@ -1,5 +1,7 @@
 # DokiTab Outbound GTM System
 
+**Miro board (visual flowchart):** https://miro.com/app/board/uXjVELGJWPI=/
+
 End-to-end design for DokiTab's signal-led outbound engine. Grounded in `context/icp/` and `context/docs/research/`. Tool choices default to the stack in `CLAUDE.md` [CLAUDE.md]; thresholds, cadences, and any step not stated in those files are marked `[INFERRED]`. Work in progress, validated with sales and leadership before build [signal-matrix.md].
 
 Product in one line: offline-first healthcare OS, HMS and EMR (pharmacy POS, lab LIMS) for Nigeria/West Africa, free core tier plus a ₦30,000/month plan [company.md]. PLG wedge: the free tier lets a facility self-serve a workspace; outbound exists to put that free workspace in front of the right facility at the right trigger [company.md] `[INFERRED]`.
