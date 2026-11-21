@@ -1,0 +1,33 @@
+{
+  "title": "How the facility-expansion workflow moves through Clay",
+  "subtitle": "Each row is a table. Follow the numbers left to right. Paid steps only run on rows that passed every step before them.",
+  "lanes": [
+    {"id": "base", "name": "Places Baseline", "note": "last month's place_ids.\nYou upload it", "dashed": true},
+    {"id": "supp", "name": "Suppression", "note": "customers + pipeline.\nYou upload it", "dashed": true},
+    {"id": "fac", "name": "Facilities", "note": "one row per facility.\nThe main table", "main": true},
+    {"id": "con", "name": "Contacts", "note": "people at qualified\nfacilities"}
+  ],
+  "steps": [
+    {"id": "b0", "n": "0", "lane": "base", "col": 2, "title": "Upload baseline", "text": "Last month's Google place_ids", "cost": null},
+    {"id": "p0", "n": "0", "lane": "supp", "col": 2, "title": "Upload suppression", "text": "Customers and active pipeline, keyed on domain", "cost": null},
+    {"id": "s1", "n": "1", "lane": "fac", "col": 1, "title": "Import Places snapshot", "text": "This month's NG healthcare facilities from Google Places", "cost": "free"},
+    {"id": "s2", "n": "2", "lane": "fac", "col": 2, "title": "Free gates", "text": "New since last month (place_id), and not on the suppression list", "cost": "free"},
+    {"id": "s3", "n": "3", "lane": "fac", "col": 3, "title": "Classify the facility", "text": "Segment, specialty, HMO, PCN, size, opening date. AI and Apollo", "cost": "paid"},
+    {"id": "s4", "n": "4", "lane": "fac", "col": 4, "title": "Route to a cell", "text": "Segment x persona, score and qualify. Only S1 x CMD sends now", "cost": "free", "highlight": true},
+    {"id": "s5", "n": "5", "lane": "con", "col": 5, "title": "Find the people", "text": "CMD, owner, dept leads at qualified facilities", "cost": "free"},
+    {"id": "s6", "n": "6", "lane": "con", "col": 6, "title": "Facility facts + persona", "text": "Read facility facts back, tag each contact's persona", "cost": "free"},
+    {"id": "s7", "n": "7", "lane": "con", "col": 7, "title": "Email and channel", "text": "Find and verify email, then email + LinkedIn or WhatsApp", "cost": "paid"},
+    {"id": "s8", "n": "8", "lane": "con", "col": 8, "title": "Lines + sequencer", "text": "Write E1 L1 and L2, push to a paused sequencer", "cost": "paid"}
+  ],
+  "arrows": [
+    {"from": "s1", "to": "s2"},
+    {"from": "b0", "to": "s2", "dashed": true},
+    {"from": "p0", "to": "s2", "dashed": true},
+    {"from": "s2", "to": "s3"},
+    {"from": "s3", "to": "s4"},
+    {"from": "s4", "to": "s5", "label": "people at\nqualified facilities"},
+    {"from": "s5", "to": "s6"},
+    {"from": "s6", "to": "s7"},
+    {"from": "s7", "to": "s8"}
+  ]
+}
